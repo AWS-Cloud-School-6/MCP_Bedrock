@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify, request
 from flask.cli import load_dotenv
 from terraform_executer import apply_terraform
-from bedrock import lambda_handler
+from bedrock1 import lambda_handler
 
 load_dotenv()
 app = Flask(__name__)
@@ -17,7 +17,7 @@ def user_name():
         lambda_handler(user_email, platform)
         return {
             'statusCode': 200,
-            'body': f"All Terraform files for {platform} have been processed and applied."
+            'body': f"All Terraform files for {user_email} have been processed and applied."
         }
     else:
         return jsonify({"error": "Request must be JSON"}), 400
