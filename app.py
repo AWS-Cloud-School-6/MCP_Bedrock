@@ -7,6 +7,10 @@ from bedrock1 import lambda_handler
 load_dotenv()
 app = Flask(__name__)
 
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+
 @app.route("/api/bedrock/username", methods=["POST"])
 def user_name():
     if request.is_json:
