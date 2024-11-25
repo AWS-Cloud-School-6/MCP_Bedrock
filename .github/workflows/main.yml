@@ -1,0 +1,46 @@
+name: Deploy Docker with AWS credentials
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시될 때 트리거
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. 코드 체크아웃
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. AWS CLI 설정
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2  # 사용 중인 AWS 리전을 입력하세요
+
+    # 3. Docker 빌드 및 배포
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub 사용자 이름
+        password: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub 비밀번호
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t jinny908/bedrock:v1 .
+        docker push jinny908/bedrock:v1
+
+    # 4. (Optional) EC2 또는 ECS에 배포
+    # - name: Deploy to EC2 (optional)
+    #   run: |
+    #     # SSH로 EC2에 접속해 Docker 컨테이너를 실행하는 예제입니다.
+    #     ssh -o StrictHostKeyChecking=no -i /path/to/your/key.pem ec2-user@your-ec2-ip-address <<EOF
+    #     docker pull jinny908/bedrock:v1
+    #     docker stop bedrock || true
+    #     docker rm bedrock || true
+    #     docker run -dp 3000:5000 --name bedrock jinny908/bedrock:v1
+    #     EOF
