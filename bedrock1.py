@@ -1,3 +1,4 @@
+# bedrock1.py
 import json
 import re
 import time
@@ -8,8 +9,12 @@ from flask.cli import load_dotenv
 import os 
 
 load_dotenv()
-bedrock_client = boto3.client(service_name='bedrock-agent-runtime', region_name='ap-northeast-2', 
-                            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), aws_secret_access_key=("AWS_SECRET_ACCESS_KEY"))
+bedrock_client = boto3.client(
+    service_name='bedrock-agent-runtime',
+    region_name='ap-northeast-2',
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+)
 bucket_name = 'aiwa-terraform-1'
 
 def lambda_handler(user_email, platform):
