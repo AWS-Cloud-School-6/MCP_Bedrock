@@ -1,11 +1,12 @@
 # Base image
 FROM python:3.9-slim
 
+
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
 # Set environment variables
-ENV FLASK_APP=app.py
-ENV FLASK_ENV=development
-ENV S3_BUCKET_NAME=aiwa-terraform
-ENV GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp_credential.json
+ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
 # Set working directory
 WORKDIR /app

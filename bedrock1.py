@@ -15,7 +15,7 @@ bedrock_client = boto3.client(
     aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
 )
-bucket_name = 'aiwa-terraform-1'
+bucket_name = 'aiwa-terraform'
 
 def lambda_handler(user_email, platform):
     folder_path = f"users/{user_email}/aws"

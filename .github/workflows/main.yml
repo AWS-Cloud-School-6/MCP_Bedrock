@@ -28,27 +28,13 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
-    # 4. .env 파일 생성
-    - name: Create .env file
-      run: |
-        echo FLASK_APP=app.py > .env
-        echo FLASK_ENV=development >> .env
-        echo S3_BUCKET_NAME=aiwa-terraform >> .env
-        echo GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp_credential.json >> .env
+
 
     - name: Build and push Docker image
       run: |
-        docker build -t jinny908/bedrock:v1 .
+        docker build \
+        --build-arg AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+        --build-arg AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+        -t jinny908/bedrock:v1 .
         docker push jinny908/bedrock:v1
 
-    # 4. (Optional) EC2 또는 ECS에 배포
-    # - name: Deploy to EC2 (optional)
-    #   run: |
-    #     # SSH로 EC2에 접속해 Docker 컨테이너를 실행하는 예제입니다.
-    #     ssh -o StrictHostKeyChecking=no -i /path/to/your/key.pem ec2-user@your-ec2-ip-address <<EOF
-    #     docker pull jinny908/bedrock:v1
-    #     docker stop bedrock || true
-    #     docker rm bedrock || true
-    #     docker run -dp 3000:5000 --name bedrock jinny908/bedrock:v1
-    #     EOF
