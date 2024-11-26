@@ -5,10 +5,11 @@ from s3_utils import list_files_in_s3, get_file_content_from_s3, save_tf_file_to
 from botocore.exceptions import ClientError
 import boto3
 from flask.cli import load_dotenv
+import os 
 
 load_dotenv()
 bedrock_client = boto3.client(service_name='bedrock-agent-runtime', region_name='ap-northeast-2', 
-                              aws_access_key_id="AWS_ACCESS_KEY_ID", aws_secret_access_key="AWS_SECRET_ACCESS_KEY")
+                            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), aws_secret_access_key=("AWS_SECRET_ACCESS_KEY"))
 bucket_name = 'aiwa-terraform-1'
 
 def lambda_handler(user_email, platform):
