@@ -60,8 +60,9 @@ def lambda_handler(user_email, platform):
                 },
                 retrieveAndGenerateConfiguration = {
                     'knowledgeBaseConfiguration':{
-                        'knowledgeBaseId': 'WR0HLFPBYD',
-                        'modelArn': 'arn:aws:bedrock:ap-northeast-2:055937727491:inference-profile/apac.anthropic.claude-3-sonnet-20240229-v1:0'
+                        'knowledgeBaseId': 'WROF8VE705',
+                        'modelArn': 'arn:aws:bedrock:ap-northeast-2:052402487676:inference-profile/apac.anthropic.claude-3-sonnet-20240229-v1:0'
+
                     },
                     'type':'KNOWLEDGE_BASE'
                 }
@@ -70,7 +71,7 @@ def lambda_handler(user_email, platform):
             # full_response_text = model_response.get('results', [{}])[0].get('outputText', "")
             match = re.search(r"```hcl\n(.*?)\n```", model_response, re.DOTALL)
             response_text = match.group(1) if match else ""
-            gcp_file_key = file_key.replace('aws', 'gcp')
+            gcp_file_key = file_key.replace('AWS', 'GCP')
             save_tf_file_to_s3(bucket_name, gcp_file_key, response_text)
 
         except ClientError as e:

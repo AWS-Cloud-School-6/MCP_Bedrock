@@ -21,7 +21,7 @@ def apply_terraform(user_email, platform):
     print("All files have been downloaded successfully.")
 
     # 환경 변수 설정 (key 폴더의 credential.json 경로 설정)
-    credential_file_path = os.path.join(key_dir, "credential.json")
+    credential_file_path = os.path.join(key_dir, "gcp_credential.json")
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_file_path
     print(f"GOOGLE_APPLICATION_CREDENTIALS set to {credential_file_path}")
 
