@@ -3,8 +3,12 @@ import os
 import boto3
 from io import BytesIO
 from pypdf import PdfReader
+from flask.cli import load_dotenv
 
-s3 = boto3.client('s3')
+load_dotenv()
+
+s3 = boto3.client('s3', 
+                  aws_access_key_id="AWS_ACCESS_KEY_ID", aws_secret_access_key="AWS_SECRET_ACCESS_KEY")
 
 def list_files_in_s3(bucket_name, folder_path):
     response = s3.list_objects_v2(Bucket=bucket_name, Prefix=folder_path)
