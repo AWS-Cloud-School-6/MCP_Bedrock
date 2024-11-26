@@ -18,7 +18,7 @@ bedrock_client = boto3.client(
 bucket_name = 'aiwa-terraform'
 
 def lambda_handler(user_email, platform):
-    folder_path = f"users/{user_email}/aws"
+    folder_path = f"users/{user_email}/AWS"
     files = list_files_in_s3(bucket_name, folder_path)
 
     if not files:
