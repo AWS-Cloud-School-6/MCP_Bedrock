@@ -1,12 +1,13 @@
-# app.py
 import os
 from flask import Flask, jsonify, request
 from flask.cli import load_dotenv
+from flask_cors import CORS  # CORS 추가
 from terraform_executer import apply_terraform
 from bedrock1 import lambda_handler
 
 load_dotenv()
 app = Flask(__name__)
+CORS(app)  # CORS 활성화
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -27,6 +28,7 @@ def user_name():
     else:
         return jsonify({"error": "Request must be JSON"}), 400
 
+
 @app.route("/bedrock/api/confirm", methods=["POST"])
 def apply_terraform_endpoint():
     if request.is_json:
@@ -42,6 +44,7 @@ def apply_terraform_endpoint():
         }
     else:
         return jsonify({"error": "Request must be JSON"}), 400
+
 
 if __name__ == "__main__":
     app.run(debug=True)
