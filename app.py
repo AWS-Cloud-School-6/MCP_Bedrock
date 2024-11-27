@@ -12,7 +12,7 @@ AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 
 
-@app.route("/api/bedrock/username", methods=["POST"])
+@app.route("/bedrock/api/username", methods=["POST"])
 def user_name():
     if request.is_json:
         user_email = request.json.get('user_email')
@@ -27,7 +27,7 @@ def user_name():
     else:
         return jsonify({"error": "Request must be JSON"}), 400
 
-@app.route("/api/terraform/confirm", methods=["POST"])
+@app.route("/bedrock/api/confirm", methods=["POST"])
 def apply_terraform_endpoint():
     if request.is_json:
         user_email = request.json.get('user_email')
